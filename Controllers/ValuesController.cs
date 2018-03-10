@@ -15,7 +15,7 @@ namespace dotnetcoreoauth2test.Controllers
         [HttpGet, Authorize]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "value12", "value22" };
         }
 
         // GET api/values/5

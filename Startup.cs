@@ -25,17 +25,18 @@ namespace dotnetcoreoauth2test
 
             services.AddMvc();
             services.AddAuthentication(IPWhiteListWithJwtBearerDefaults.AuthenticationScheme)
-                    .AddIpWhitelistAndBearer(options => options.WhitelistedSubnets = new[] { "255.0.0.0/8", "::1/128" }.ToList(),
-                                        options => options.TokenValidationParameters = new TokenValidationParameters
-                                        {
-                                            ValidateIssuer = true,
-                                            ValidateAudience = false,
-                                            ValidateLifetime = true,
-                                            ValidateIssuerSigningKey = true,
-                                            ValidIssuer = "https://sts.windows.net/41c3ed9c-4e9e-4336-a82a-6447bd9136d3/",
-                                            IssuerSigningKeys = JWKSProvider.GetKeySet("https://login.microsoftonline.com/common/discovery/keys")
-                                        });
-                    
+                    .AddIpWhitelistAndBearer(
+                options => options.WhitelistedSubnets = new[] { "255.0.0.0/8", "::1/128" }.ToList(),
+                options => options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = "https://sts.windows.net/41c3ed9c-4e9e-4336-a82a-6447bd9136d3/",
+                    IssuerSigningKeys = JWKSProvider.GetKeySet("https://login.microsoftonline.com/common/discovery/keys")
+                });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +51,4 @@ namespace dotnetcoreoauth2test
             app.UseMvc();
         }
     }
-
-
 }

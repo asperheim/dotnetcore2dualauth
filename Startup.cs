@@ -46,7 +46,7 @@ namespace dotnetcoreoauth2test
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseAuthentication();
             app.UseMvc();
         }

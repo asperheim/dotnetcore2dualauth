@@ -10,9 +10,17 @@ using System.Security.Claims;
 
 public class IPWhiteListAuthenticationHandler : AuthenticationHandler<IPWhitelistOptions>
 {
+    private readonly IIPWhiteListAuthenticationManager _whiteListAuthenticationManager;
 
-    public IPWhiteListAuthenticationHandler(IOptionsMonitor<IPWhitelistOptions> options, ILoggerFactory logger, UrlEncoder encoder, ISystemClock clock) : base(options, logger, encoder, clock)
+    public IPWhiteListAuthenticationHandler(
+        IOptionsMonitor<IPWhitelistOptions> options, 
+        ILoggerFactory logger, 
+        UrlEncoder encoder, 
+        ISystemClock clock, 
+        IIPWhiteListAuthenticationManager whiteListAuthenticationManager) 
+        : base(options, logger, encoder, clock)
     {
+        _whiteListAuthenticationManager = whiteListAuthenticationManager;
     }
 
     protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -28,6 +36,7 @@ public class IPWhiteListAuthenticationHandler : AuthenticationHandler<IPWhitelis
 
         var inWhitelistedSubnet = Options
             .WhitelistedSubnets
+            .Concat(await _whiteListAuthenticationManager.GetWhitelistedSubnets())
             .Any(x => (IPNetwork
                        .Parse(x)
                        .Contains(callerIp)));

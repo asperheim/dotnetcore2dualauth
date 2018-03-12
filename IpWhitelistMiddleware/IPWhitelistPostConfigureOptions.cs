@@ -4,6 +4,5 @@ public class IPWhitelistPostConfigureOptions : IPostConfigureOptions<IPWhitelist
 {
     public void PostConfigure(string name, IPWhitelistOptions options)
     {
-
     }
 }
